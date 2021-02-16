@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FIbonacci", "FIbonacci.fsproj", "{ED76AC5E-D8A2-4D09-A0DA-8C0956AFE77F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED76AC5E-D8A2-4D09-A0DA-8C0956AFE77F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED76AC5E-D8A2-4D09-A0DA-8C0956AFE77F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED76AC5E-D8A2-4D09-A0DA-8C0956AFE77F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED76AC5E-D8A2-4D09-A0DA-8C0956AFE77F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
