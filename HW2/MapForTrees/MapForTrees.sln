@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MapForTrees", "MapForTrees.fsproj", "{08D36AF5-FE88-464C-8D60-70C9CE17F8AB}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MapForTreesTests", "..\MapForTreesTests\MapForTreesTests.fsproj", "{339D6CB2-5102-420C-BD2B-46BB7D8794D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08D36AF5-FE88-464C-8D60-70C9CE17F8AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08D36AF5-FE88-464C-8D60-70C9CE17F8AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08D36AF5-FE88-464C-8D60-70C9CE17F8AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08D36AF5-FE88-464C-8D60-70C9CE17F8AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{339D6CB2-5102-420C-BD2B-46BB7D8794D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{339D6CB2-5102-420C-BD2B-46BB7D8794D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{339D6CB2-5102-420C-BD2B-46BB7D8794D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{339D6CB2-5102-420C-BD2B-46BB7D8794D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2DCEFB7-589D-4446-9C68-19676C6C42E1}
+	EndGlobalSection
+EndGlobal
