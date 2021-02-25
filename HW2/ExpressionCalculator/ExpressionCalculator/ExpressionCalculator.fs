@@ -1,7 +1,5 @@
 ﻿module ExpressionCalculator
 
-open System
-
 //A tree of the parsed arithmetical expression
 type Expression =
     | Number of int
