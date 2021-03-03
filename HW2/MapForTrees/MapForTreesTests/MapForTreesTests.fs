@@ -19,7 +19,7 @@ let rec haveSameStructure tree1 tree2 =
 
 [<Test>]
 let ``Should work with empty tree``() =
-    areEqual (treeMap Empty (fun x -> x)) Empty |> should be True
+    areEqual (treeMap Empty id) Empty |> should be True
 
 [<Test>]
 let ``Should work with leaf``() =
@@ -29,7 +29,7 @@ let ``Should work with leaf``() =
 let ``Should work with children``() =
     let tree = Tree(2, (Tree(3, Empty, Empty)), (Tree(4, Empty, Empty)))
     let squaredTree = Tree(4, (Tree(9, Empty, Empty)), (Tree(16, Empty, Empty)))
-    areEqual (treeMap tree id) squaredTree |> should be True
+    areEqual (treeMap tree (fun x -> x * x)) squaredTree |> should be True
 
 [<Test>]
 let ``Should work with grandchildren``() =
@@ -40,6 +40,6 @@ let ``Should work with grandchildren``() =
 [<Test>]
 let ``Should keep the structure``() =
     let checkIfKeepStructure tree =
-        let mappedTree = treeMap tree (fun x -> x)
+        let mappedTree = treeMap tree id
         haveSameStructure tree mappedTree
     Check.QuickThrowOnFailure checkIfKeepStructure
