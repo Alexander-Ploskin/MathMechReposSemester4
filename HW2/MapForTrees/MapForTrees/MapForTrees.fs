@@ -1,11 +1,16 @@
 ﻿module MapForTrees
 
-// Binary tree
+/// <summary>
+/// Binaty tree
+/// </summary>
 type Tree<'a> =
     | Empty
     | Tree of 'a * Tree<'a> * Tree<'a>
 
-// Returns new tree with values given by the function on values in nodes of the tree
+/// <summary>
+/// Returns new tree with values given by the function on values in nodes of the tree
+/// </summary>
+
 let rec treeMap tree func = 
     match tree with 
     | Empty -> Empty
