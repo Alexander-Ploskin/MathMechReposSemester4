@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Compile Include="CountersTests.fs" />
-    <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>

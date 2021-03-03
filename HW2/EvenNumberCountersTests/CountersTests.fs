@@ -3,7 +3,7 @@ module EvenNumberCounters
 open NUnit.Framework
 open FsCheck
 open FsUnit
-open EvenNumbersCounters.Counters
+open Counters
 
 [<Test>]
 let ``Should work on empty list``() =
