@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SequenceOfPrimes", "SequenceOfPrimes\SequenceOfPrimes.fsproj", "{EA8F8403-4AD9-4603-AD14-6D0131E50509}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SequenceOfPrimesTests", "SequenceOfPrimesTests\SequenceOfPrimesTests.fsproj", "{117071C2-915C-4F4C-A542-97CC100FEE9D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA8F8403-4AD9-4603-AD14-6D0131E50509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA8F8403-4AD9-4603-AD14-6D0131E50509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA8F8403-4AD9-4603-AD14-6D0131E50509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA8F8403-4AD9-4603-AD14-6D0131E50509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117071C2-915C-4F4C-A542-97CC100FEE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117071C2-915C-4F4C-A542-97CC100FEE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117071C2-915C-4F4C-A542-97CC100FEE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117071C2-915C-4F4C-A542-97CC100FEE9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E93E3C3C-4C98-4B6B-A0CF-B483861BDEA9}
+	EndGlobalSection
+EndGlobal
