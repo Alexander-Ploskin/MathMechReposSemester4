@@ -1,0 +1,10 @@
+\documentclass[24pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathtools}
+
+\begin{document}
+    S K K $\equiv$ (($\lambda$ x y z.x z (y z)) K) K
+    $\to_\beta$ ($\lambda$ y z.K z (y z)) K $\to_\beta$
+    ($\lambda$ y z.z) K $\to_\beta$ ($\lambda$ z.z)
+\end{document}
