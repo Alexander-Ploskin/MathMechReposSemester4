@@ -5,39 +5,26 @@ open FsCheck
 open FsUnit
 open Counters
 
-[<Test>]
-let ``Should work on empty list``() =
-    let list = []
-    mapEvenNumbersCounter list |> should equal 0
-    filterEvenNumbersCounter list |> should equal 0
-    foldEvenNumbersCounter list |> should equal 0
+type EvenNumbersCountersTests () =
+    let testingFunctions = [mapEvenNumbersCounter; filterEvenNumbersCounter; foldEvenNumbersCounter]
+    static member testCases = [|
+        [], 0
+        [1; 2; 3; 4; 5], 2
+        [1; 0; 1], 1
+        [-1; -2; -3; -4; -5], 2
+    |]
 
-[<Test>]
-let ``Should work on list of natural numbers``() =
-    let list = [1; 2; 3; 4; 5]
-    mapEvenNumbersCounter list |> should equal 2
-    filterEvenNumbersCounter list |> should equal 2
-    foldEvenNumbersCounter list |> should equal 2
+    [<TestCaseSource("testCases")>]
+    [<Test>]
+    member this.``Should work on simple lists`` testCase =
+        let input, expected = testCase
+        testingFunctions |> List.iter (fun x -> (x input) |> should equal expected)
 
-[<Test>]
-let ``Should work with zero``() =
-    let list = [1; 0; 1]
-    mapEvenNumbersCounter list |> should equal 1
-    filterEvenNumbersCounter list |> should equal 1
-    foldEvenNumbersCounter list |> should equal 1
-
-[<Test>]
-let ``Should work on negative numbers``() =
-    let list = [-1; -2; -3; -4; -5]
-    mapEvenNumbersCounter list |> should equal 2
-    filterEvenNumbersCounter list |> should equal 2
-    foldEvenNumbersCounter list |> should equal 2
-
-[<Test>]
-let ``Should have same output``() = 
-    let checkIfHaveSameOutput list =
-        let mapResult = mapEvenNumbersCounter list
-        let filterResult = filterEvenNumbersCounter list
-        let foldResult = foldEvenNumbersCounter list
-        mapResult = filterResult && filterResult = foldResult
-    Check.QuickThrowOnFailure checkIfHaveSameOutput
+    [<Test>]
+    member this. ``Should have same output``() = 
+        let checkIfHaveSameOutput list =
+            let mapResult = mapEvenNumbersCounter list
+            let filterResult = filterEvenNumbersCounter list
+            let foldResult = foldEvenNumbersCounter list
+            mapResult = filterResult && filterResult = foldResult
+        Check.QuickThrowOnFailure checkIfHaveSameOutput
