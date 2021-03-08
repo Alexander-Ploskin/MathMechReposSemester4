@@ -1,6 +1,6 @@
 ﻿module ExpressionCalculator
 
-//A tree of the parsed arithmetical expression
+/// A tree of the parsed arithmetical expression
 type Expression =
     | Number of int
     | Product of Expression * Expression
@@ -8,7 +8,7 @@ type Expression =
     | Sum of Expression * Expression
     | Difference of Expression * Expression
 
-// Calculates parsed arithmetical expression
+/// Calculates parsed arithmetical expression
 let rec calculate expression = 
     match expression with
     | Number x -> x
