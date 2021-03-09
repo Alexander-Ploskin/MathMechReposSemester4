@@ -1,5 +1,6 @@
 module LambdaInterpreterTests
 
+open System
 open NUnit.Framework
 open FsUnit
 
@@ -13,17 +14,15 @@ let LowercaseOmega x = Abstraction(x, Application(Variable x, Variable x))
 let Omega x = Application(LowercaseOmega x, LowercaseOmega x)
 
 type LambdaInterpreterTests () =
-    static member SimpleExamples = [|
-        Application(S, Application(K, K)), I
-        Application(I, I), I
-        Application(K, I), K_Star
-    |]
-
-    member this.areSame term1 term2 = 
-        match term1, term2 with
-        | Variable value1, Variable value2 -> true
-        | Application(left1, right1), Application(left2, right2) -> this.areSame left1 left2 && this.areSame right1 right2
-        | Abstraction(variable1, innerTerm1), Abstraction(variable2, innerTerm2) -> variable1 = variable2 
+    static member SimpleExamples = 
+        let x = Guid.NewGuid()
+        let y = Guid.NewGuid()
+        let z = Guid.NewGuid()
+        [|
+            Application(S x y z, Application(K x y, K x y)), I x
+            Application(I x, I x), I x
+            Application(K x y, I x), K_Star x y
+        |]
 
     [<TestCaseSource("SimpleExamples")>]
     [<Test>]
