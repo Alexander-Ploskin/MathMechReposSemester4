@@ -20,8 +20,7 @@ let SimpleExamples = [|
     Application(K_Star, Application(I, I)), I
 |]
 
-[<Test>]
-[<TestCaseSource("SimpleExamples")>]
+[<TestCaseSource(nameof(SimpleExamples))>]
 let ``Should work correct on simple examples`` (testCase) =
     let term, expected = testCase
     reduce term |> should equal expected
