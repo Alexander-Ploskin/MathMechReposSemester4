@@ -9,9 +9,6 @@ open LambdaInterpreter
 let I x = Abstraction(x, Variable x)
 let K x y = Abstraction(x, Abstraction(y, Variable x))
 let K_Star x y = Abstraction(x, Abstraction(y, Variable y))
-let S x y z = Abstraction(x, Abstraction(y, Abstraction(z, Application(Variable x, Application(Variable z, Application(Variable y, Variable z))))))
-let LowercaseOmega x = Abstraction(x, Application(Variable x, Variable x))
-let Omega x = Application(LowercaseOmega x, LowercaseOmega x)
 
 type LambdaInterpreterTests () =
     static member SimpleExamples = 

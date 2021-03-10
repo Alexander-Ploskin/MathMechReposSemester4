@@ -2,47 +2,47 @@
 
 open System
 
-/// Implementation of lambda term by the defenition
-type LambdaTerm<'a> = 
+/// Implementation of lambda term by the defenition using Guid as an alphebet
+type LambdaTerm<'a> =
     | Variable of 'a
     | Application of LambdaTerm<'a> * LambdaTerm<'a>
     | Abstraction of 'a * LambdaTerm<'a>
 
-/// Returns set of variables which are free in the term
-let rec getFreeVariables term = 
-    let rec getFreeVariablesSubFunction term acc =
-        match term with 
-        | Variable name -> Set.add name acc
-        | Application(left, right) -> getFreeVariablesSubFunction left acc + getFreeVariablesSubFunction  right acc
-        | Abstraction(variable, term) -> getFreeVariablesSubFunction term acc - set[variable]
-    getFreeVariablesSubFunction term Set.empty
+/// Returns set of free variables in the term
+let rec getFreeVariables term =
+    let rec getFreeVariablesSubfunction term acc =
+        match term with
+        | Variable name -> acc |> Set.add name
+        | Application(left, right) -> getFreeVariablesSubfunction left acc + getFreeVariablesSubfunction right acc
+        | Abstraction(variable, innerTerm) -> getFreeVariablesSubfunction innerTerm acc - set[variable]
+    getFreeVariablesSubfunction term Set.empty
 
-/// Generates new value which is not contained in the set
-let rec getValueNotContainedInSet set = 
-    match Guid.NewGuid() with
-    | name when set |> Set.contains name -> getValueNotContainedInSet set
-    | name -> name
+/// Returns new value which is not contained in the set
+let rec getNewValueNotFromTheSet set =
+    let newValue = Guid.NewGuid()
+    if set |> Set.contains newValue then getNewValueNotFromTheSet set else newValue
 
-/// Substitutes varToSubstitute in the term by the newTerm
-let rec substitute term varToSubstitute newTerm =
+/// Substitutes the variable in the term with the new term
+let rec substitute term variableToChange substitutedTerm =
     match term with
-    | Variable name when name = varToSubstitute -> newTerm
+    | Variable name when name = variableToChange -> substitutedTerm
     | Variable _ -> term
-    | Application(left, right) -> Application(substitute left varToSubstitute newTerm, substitute right varToSubstitute newTerm)
+    | Application(left, right) -> Application(substitute left variableToChange substitutedTerm, substitute right variableToChange substitutedTerm)
     | Abstraction(variable, innerTerm) ->
         match variable with
-        | varToSubstitute -> term
-        | _ when set[variable; varToSubstitute] |> Set.isSubset (getFreeVariables term) |> not 
-            -> Abstraction(variable, substitute innerTerm varToSubstitute newTerm)
-        | _ -> let newVariable = getFreeVariables innerTerm + getFreeVariables newTerm |> getValueNotContainedInSet
-               Abstraction(newVariable, innerTerm |> substitute (Variable newVariable) variable |> substitute newTerm varToSubstitute)
+        | name when name = variableToChange -> term
+        | _ when getFreeVariables innerTerm |> Set.contains variableToChange |> not || getFreeVariables substitutedTerm |> Set.contains variable|> not
+            -> Abstraction(variable, substitute innerTerm variableToChange substitutedTerm)
+        | _ -> let newVariable = getFreeVariables innerTerm + getFreeVariables substitutedTerm |> getNewValueNotFromTheSet
+               Abstraction(newVariable, innerTerm |> substitute (Variable newVariable) variable |> substitute substitutedTerm variableToChange)
 
-/// Applies beta reduction to the term by the normal strategy
+/// Applies beta-reduction by the normal strategy to the term
+/// <param name="term">Lambda term which should use Guid as an alphabet</param>
 let rec reduce term = 
-    match term with 
+    match term with
     | Variable _ -> term
-    | Application(left, right) -> 
+    | Application(left, right) ->
         match left with
         | Abstraction(variable, innerTerm) -> substitute innerTerm variable right |> reduce
         | _ -> Application(reduce left, reduce right)
-    | Abstraction(variable, abstractionTerm) -> Abstraction(variable, reduce abstractionTerm)
+    | Abstraction(variable, innerTerm) -> Abstraction(variable, reduce innerTerm)
