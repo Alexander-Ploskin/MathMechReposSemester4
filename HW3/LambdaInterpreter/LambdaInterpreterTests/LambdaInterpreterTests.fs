@@ -1,4 +1,4 @@
-module LambdaInterpreterTests
+﻿module LambdaInterpreterTests
 
 open System
 open NUnit.Framework
@@ -6,23 +6,22 @@ open FsUnit
 
 open LambdaInterpreter
 
-let I x = Abstraction(x, Variable x)
-let K x y = Abstraction(x, Abstraction(y, Variable x))
-let K_Star x y = Abstraction(x, Abstraction(y, Variable y))
+let x = Guid.NewGuid()
+let y = Guid.NewGuid()
 
-type LambdaInterpreterTests () =
-    static member SimpleExamples = 
-        let x = Guid.NewGuid()
-        let y = Guid.NewGuid()
-        let z = Guid.NewGuid()
-        [|
-            Application(S x y z, Application(K x y, K x y)), I x
-            Application(I x, I x), I x
-            Application(K x y, I x), K_Star x y
-        |]
+let I = Abstraction(x, Variable x)
+let K = Abstraction(x, Abstraction(y, Variable x))
+let K_Star = Abstraction(x, Abstraction(y, Variable y))
 
-    [<TestCaseSource("SimpleExamples")>]
-    [<Test>]
-    member this.``Should be correct on simple examples`` testCase =
-        let term, expected = testCase
-        reduce term |> should equal expected
+let SimpleExamples = [|
+    Application(I, I), I
+    Application(K, I), K_Star
+    Application(K, Application(K_Star, K)), K
+    Application(K_Star, Application(I, I)), I
+|]
+
+[<Test>]
+[<TestCaseSource("SimpleExamples")>]
+let ``Should work correct on simple examples`` (testCase) =
+    let term, expected = testCase
+    reduce term |> should equal expected
