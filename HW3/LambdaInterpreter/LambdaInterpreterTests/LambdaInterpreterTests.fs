@@ -14,13 +14,13 @@ let K = Abstraction(x, Abstraction(y, Variable x))
 let K_Star = Abstraction(x, Abstraction(y, Variable y))
 
 let SimpleExamples = [|
-    ((Application(I, I)),I)
-    ((Application(K, I)), K_Star)
-    ((Application(K, Application(K_Star, K))), K)
-    ((Application(K_Star, Application(I, I))), I)
+    (Application(I, I))
+    (Application(K, I))
+    (Application(K, Application(K_Star, K)))
+    (Application(K_Star, Application(I, I)))
 |]
 
 [<TestCaseSource(nameof(SimpleExamples))>]
 let ``Should work correct on simple examples`` (testCase) =
-    let term, expected = testCase
-    reduce term |> should equal expected
+    let term = testCase
+    reduce term |> should equal I
