@@ -36,14 +36,14 @@ type HelpersTests() =
         |]
 
     [<TestCaseSource(nameof(HelpersTests.GetFreeVariablesCases))>]
-    member this.``Should get free variables correctly``(testCase) =
+    member this.``Should get free variables correctly``(testCase: LambdaTerm<Guid> * Set<Guid>) =
         let term, expected = testCase
         term |> getFreeVariables |> should equal expected
     
     [<TestCaseSource(nameof(HelpersTests.SubstitutionCasesWithoutNameConflicts))>]
-    member this.``Should substitute variables correctly``(testCase) =
+    member this.``Should substitute variables correctly``(testCase: LambdaTerm<Guid> * Guid * LambdaTerm<Guid> * LambdaTerm<Guid>) =
         let term, varToSubstitute, termToSubstitute, expected = testCase
-        term |> substitute varToSubstitute termToSubstitute |> should equal expected
+        substitute term varToSubstitute termToSubstitute |> should equal expected
 
     [<Test>]
     member this.``Substitution with name collision should be successful`` () =
