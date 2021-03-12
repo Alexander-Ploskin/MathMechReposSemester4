@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="HelpFunctionsTests.fs" />
     <Compile Include="LambddaInterpreterTests.fs" />
   </ItemGroup>
 
