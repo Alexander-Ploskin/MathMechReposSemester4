@@ -30,9 +30,9 @@ type HelpersTests() =
         let z = Guid.NewGuid()
         [|
             (Variable x), y, (Application(Variable y, Variable z)), Variable x
-            (Application(Variable x, Variable x)), x, (Variable z), Application(Variable z, Variable z)
+            (Application(Variable x, Variable y)), y, (Variable z), Application(Variable x, Variable z)
             (Abstraction(x, Variable x)), x, (Application(Variable y, Variable z)), Abstraction(x, Variable x)
-            (Abstraction(y, Variable x)), x, (Variable z), (Abstraction(y, Variable z))
+            (Abstraction(y, Variable x)), x, (Variable z), Abstraction(y, Variable z)
         |]
 
     [<TestCaseSource(nameof(HelpersTests.GetFreeVariablesCases))>]

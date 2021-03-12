@@ -46,3 +46,4 @@ let rec reduce term =
         | Abstraction(variable, innerTerm) -> substitute innerTerm variable right |> reduce
         | _ -> Application(reduce left, reduce right)
     | Abstraction(variable, innerTerm) -> Abstraction(variable, reduce innerTerm)
+
