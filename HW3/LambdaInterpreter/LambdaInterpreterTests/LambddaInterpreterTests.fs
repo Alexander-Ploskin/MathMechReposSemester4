@@ -12,20 +12,25 @@ type LambdaInterpreterTests() =
     static member testCases() = 
         let x = Guid.NewGuid()
         let y = Guid.NewGuid()
+
+        let I = Abstraction(x, Variable x)
+        let K = Abstraction(x, Abstraction(y, Variable x))
+        let K_Star = Abstraction(x, Abstraction(y, Variable y))
         [|
-            Application (Abstraction (x, Variable y),
-                Application (Abstraction (x, Application(Application(Variable x, Variable x), Variable x)),
-                    Abstraction (x, Application(Application(Variable x, Variable x), Variable x)))),
-            Variable y
+            Application(I, I),
+            I
             
-            Application (Abstraction (x, Variable x), Abstraction (x, Variable x)),
-            Abstraction(x, Variable x)
+            Application(K, I),
+            K_Star
             
-            Application (Abstraction (x, Abstraction (y, Variable x)), Abstraction (x, Variable x)),
-            Abstraction (y, Abstraction (x, Variable x))
+            Application(K, Application(K_Star, K)),
+            K
+
+            Application(K_Star, Application(I, I)),
+            I
         |]
 
     [<TestCaseSource(nameof LambdaInterpreterTests.testCases)>]
-    member this.``Terms with normal form must be reduced to it by normal reduction `` (testCase) =
+    member this.``Should work correct on simple examples`` (testCase: LambdaTerm<Guid> * LambdaTerm<Guid>) =
         let term, expectedNormalForm = testCase
         reduce term |> should equal expectedNormalForm
