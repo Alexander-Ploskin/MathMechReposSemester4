@@ -2,7 +2,6 @@ module LambdaInterpreterTests
 
 open System
 open NUnit.Framework
-open FsCheck
 open FsUnit
 
 open LambdaInterpreter
@@ -17,17 +16,11 @@ type LambdaInterpreterTests() =
         let K x y = Abstraction(x, Abstraction(y, Variable x))
         let K_Star x y = Abstraction(x, Abstraction(y, Variable y))
         [|
-            Application(I x, I x),
-            I x
-            
-            Application(K x y, I x),
-            K_Star y x
-            
-            Application(K x y, Application(K_Star x y, K x y)),
-            K y x
-
-            Application(K_Star x y, Application(I x, I x)),
-            I y
+            Application(I x, I x), I x
+            Application(K x y, I x), K_Star y x
+            Application(K_Star x y, Application(I x, I x)), I y
+            Application(I x, K x y), I x
+            Application(I x, Application(I x, I x)), I x
         |]
 
     [<TestCaseSource(nameof LambdaInterpreterTests.testCases)>]
