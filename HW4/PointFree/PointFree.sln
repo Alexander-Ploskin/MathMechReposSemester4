@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PointFree", "PointFree\PointFree.fsproj", "{139D7F94-45D8-4E7F-9394-30CDE0683777}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PointFreeTests", "PointFreeTests\PointFreeTests.fsproj", "{BD39322A-2073-40FE-A0C6-4B592B43C42E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{139D7F94-45D8-4E7F-9394-30CDE0683777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{139D7F94-45D8-4E7F-9394-30CDE0683777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{139D7F94-45D8-4E7F-9394-30CDE0683777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{139D7F94-45D8-4E7F-9394-30CDE0683777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD39322A-2073-40FE-A0C6-4B592B43C42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD39322A-2073-40FE-A0C6-4B592B43C42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD39322A-2073-40FE-A0C6-4B592B43C42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD39322A-2073-40FE-A0C6-4B592B43C42E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D45E75B2-AC8C-4A81-9517-96EB6C340E9B}
+	EndGlobalSection
+EndGlobal
