@@ -18,7 +18,7 @@ type LambdaInterpreterTests() =
         [|
             Application(I x, I x), I x
             Application(K x y, I x), K_Star y x
-            Application(K_Star x y, Application(I x, I x)), I y
+            Application(K_Star x y, Application(I x, I x)), K y x
             Application(I x, K x y), I x
             Application(I x, Application(I x, I x)), I x
         |]
