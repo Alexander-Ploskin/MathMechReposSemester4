@@ -13,21 +13,21 @@ type LambdaInterpreterTests() =
         let x = Guid.NewGuid()
         let y = Guid.NewGuid()
 
-        let I = Abstraction(x, Variable x)
-        let K = Abstraction(x, Abstraction(y, Variable x))
-        let K_Star = Abstraction(x, Abstraction(y, Variable y))
+        let I x = Abstraction(x, Variable x)
+        let K x y = Abstraction(x, Abstraction(y, Variable x))
+        let K_Star x y = Abstraction(x, Abstraction(y, Variable y))
         [|
-            Application(I, I),
-            I
+            Application(I x, I x),
+            I x
             
-            Application(K, I),
-            K_Star
+            Application(K x y, I x),
+            K_Star y x
             
-            Application(K, Application(K_Star, K)),
-            K
+            Application(K x y, Application(K_Star x y, K x y)),
+            K y x
 
-            Application(K_Star, Application(I, I)),
-            I
+            Application(K_Star x y, Application(I x, I x)),
+            I y
         |]
 
     [<TestCaseSource(nameof LambdaInterpreterTests.testCases)>]
