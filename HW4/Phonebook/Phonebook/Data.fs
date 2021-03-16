@@ -49,5 +49,5 @@ let selectPhoneNumbers notes name =
 
 /// Inserts new note into the set of notes
 let insertNote notes name phoneNumber =
-    if snd phoneNumber |> matchWithExpression numberValidationExpression |> not then failwith "Number is not correct"
+    if phoneNumber |> matchWithExpression numberValidationExpression |> not then failwith "Number is not correct"
     notes |> Set.add (name, phoneNumber)

@@ -1,8 +1,6 @@
 ﻿module PhoneBook
 
 open System
-open System.Text.RegularExpressions
-open System.IO
 
 open Data
 
@@ -36,7 +34,7 @@ let addNote notes =
     let phoneNumber = enterCorrect (matchWithExpression numberValidationExpression)
     if phoneNumber = "0" then ()
     else printfn "New note saved"
-    notes |> Set.add (name, phoneNumber)
+    insertNote notes name phoneNumber
 
 /// Finds all numbers which belong to the name
 let findNumbers notes =
