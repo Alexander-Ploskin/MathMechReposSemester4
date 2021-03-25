@@ -6,20 +6,20 @@ open OS
 open Virus
 
 let computer1 = Computer(Windows, "c1")
-let computer2 = Computer(Windows, "c2")
-let computer3 = Computer(Windows, "c3")
+let computer2 = Computer(Linux, "c2")
+let computer3 = Computer(MacOS, "c3")
 let computer4 = Computer(Windows, "c4")
-let computer5 = Computer(Windows, "c5")
-let computer6 = Computer(Windows, "c6")
+let computer5 = Computer(Linux, "c5")
+let computer6 = Computer(MacOS, "c6")
 let computer7 = Computer(Windows, "c7")
-let computer8 = Computer(Windows, "c8")
-let computer9 = Computer(Windows, "c9")
+let computer8 = Computer(Linux, "c8")
+let computer9 = Computer(MacOS, "c9")
 let computer10 = Computer(Windows, "c10")
-let computer11 = Computer(Windows, "c11")
-let computer12 = Computer(Windows, "c12")
+let computer11 = Computer(Linux, "c11")
+let computer12 = Computer(MacOS, "c12")
 let computer13 = Computer(Windows, "c13")
-let computer14 = Computer(Windows, "c14")
-let computer15 = Computer(Windows, "c15")
+let computer14 = Computer(Linux, "c14")
+let computer15 = Computer(MacOS, "c15")
 let computers = [computer1; computer2; computer3; computer4; computer5; computer6; computer7;
 computer8; computer9; computer10; computer11; computer12; computer13; computer14; computer15;]
 

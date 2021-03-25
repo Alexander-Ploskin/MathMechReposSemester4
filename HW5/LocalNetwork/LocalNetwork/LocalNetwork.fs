@@ -19,10 +19,10 @@ type LocalNetwork(computers : List<Computer>, virus : Virus) =
     member this.canChange =
         let canChangeNode (comp : Computer) =
             comp.Infected && List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected |> not) && virus.Check(comp.OS, adjacentComp.OS) > 0.0) comp.AdjacentComputers
-        List.exists (fun (comp : Computer) -> (canChangeNode comp))
+        List.exists (fun (comp : Computer) -> (canChangeNode comp)) computers
 
     member this.run =
-        if this.canChange computers then
+        if this.canChange  then
             this.turn <| new Random()
             let infectedString (comp : Computer) = if comp.Infected then "infected" else "not infected"
             List.iter (fun (comp : Computer) -> printfn $"{comp.Name} with OS {comp.OS} is {infectedString comp}") computers
