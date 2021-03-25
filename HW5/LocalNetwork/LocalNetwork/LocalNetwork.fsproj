@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="OS.fs" />
     <Compile Include="Computer.fs" />
+    <Compile Include="Virus.fs" />
     <Compile Include="LocalNetwork.fs" />
   </ItemGroup>
 

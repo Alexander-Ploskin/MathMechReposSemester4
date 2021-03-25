@@ -3,13 +3,14 @@
 open System
 open Computer
 open OS
+open Virus
 
-type LocalNetwork(computers : List<Computer>) =
+type LocalNetwork(computers : List<Computer>, virus : Virus) =
     let turn(rand : Random) =
         let tryInfect (computer : Computer) =
             match computer.Infected with
             | true -> ()
-            | false -> computer.Infected <- List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected && (adjacentComp.JustInfected |> not) && (rand.NextDouble() < InfectionInfo.Check(computer.OS, adjacentComp.OS)))) computer.AdjacentComputers
+            | false -> computer.Infected <- List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected && (adjacentComp.JustInfected |> not) && (rand.NextDouble() < virus.Check(computer.OS, adjacentComp.OS)))) computer.AdjacentComputers
                        if computer.Infected then computer.JustInfected <- true
 
         List.iter tryInfect computers
@@ -17,7 +18,7 @@ type LocalNetwork(computers : List<Computer>) =
 
     let canChange =
         let canChangeNode (comp : Computer) =
-            comp.Infected && List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected |> not) && InfectionInfo.Check(comp.OS, adjacentComp.OS) > 0.0) comp.AdjacentComputers
+            comp.Infected && List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected |> not) && virus.Check(comp.OS, adjacentComp.OS) > 0.0) comp.AdjacentComputers
         List.exists (fun (comp : Computer) -> (canChangeNode comp))
 
     member this.run =
