@@ -9,8 +9,11 @@ let stringSquare n =
     let rec loop i acc =
         match i with
         | 0 -> acc
-        | _ -> loop (i - 1) (acc + getBorderedString n "*" "1")
-    if n = 1 then "*"
-    else (getBorderedString n "*" "*") + (loop (n - 2) "") + (getBorderedString n "*" "*")
+        | _ -> loop (i - 1) (acc + getBorderedString n "*" " ")
+    match n with
+    | 0 -> Some("\n")
+    | 1 -> Some("*\n")
+    | value when value > 0 -> Some((getBorderedString n "*" "*") + (loop (n - 2) "") + (getBorderedString n "*" "*"))
+    | _ -> None
 
 printfn "%A" <| stringSquare 5
