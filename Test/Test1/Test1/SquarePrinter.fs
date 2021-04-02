@@ -15,5 +15,3 @@ let stringSquare n =
     | 1 -> Some("*\n")
     | value when value > 0 -> Some((getBorderedString n "*" "*") + (loop (n - 2) "") + (getBorderedString n "*" "*"))
     | _ -> None
-
-printfn "%A" <| stringSquare 5

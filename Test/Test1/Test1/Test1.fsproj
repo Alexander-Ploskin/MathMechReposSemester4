@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Supermap.fs" />
     <Compile Include="SquarePrinter.fs" />
   </ItemGroup>
 
