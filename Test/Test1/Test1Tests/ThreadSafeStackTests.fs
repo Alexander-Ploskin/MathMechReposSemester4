@@ -19,5 +19,5 @@ let ``Should work correctly with many values`` () =
     let stack = Stack<int>()
     stack.Push(1)
     stack.Push(0)
-    stack.TryPop() |> should equal <| Some("0")
-    stack.TryPop() |> should equal <| Some("1")
+    stack.TryPop() |> should equal <| Some(0)
+    stack.TryPop() |> should equal <| Some(1)
