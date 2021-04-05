@@ -3,57 +3,14 @@
 open System.IO
 open System.Net
 open System.Text.RegularExpressions
+open System.Threading
 
-(*let downloadPageAsync (url : string) (path : string) =
-    async {
-        try
-            let request = WebRequest.Create(url)
-            use! response = request.AsyncGetResponse()
-            use stream = response.GetResponseStream()
-            use reader = new StreamReader(stream)
-            use fileStream = File.Create(path)
-            use writer = new StreamWriter(fileStream)
-            let content = reader.ReadToEnd()
-            do! writer.WriteAsync(content)
-            return Some <| content
-        with
-        | _ -> return None
-    }
-
-let saveContentAsync (path : string) (content : string) =
-    async {
-        use stream = File.Create(path)
-        use writer = new StreamWriter(stream)
-        return writer.Write(content)
-    }
 
 let linkRegex = 
     Regex("<a href\s*=\s*\"?(https?://[^\"]+)\"?\s*>", RegexOptions.Compiled)
 
 let getAllLinkedPages (html : string) =
     [for matches in (linkRegex.Matches(html) : MatchCollection) -> matches.Groups.[1].Value]
-
-let downloadAllLinkedPages url  =
-    let mainPage = downloadPageAsync url |> Async.RunSynchronously
-    match mainPage with
-    | Some html -> getAllLinkedPages html
-                   |> List.map (fun link -> downloadPageAsync link)
-                   |> Async.Parallel |> Async.RunSynchronously |> Array.toList
-                   |> List.mapi (fun i page -> match page with
-                                               | Some(content) -> saveContentAsync $"{i}.html" content
-                                               | _ -> )
-    | None -> printfn "Can't reach specified page"
-              []
-
-let pages = downloadAllLinkedPages "https://github.com/Alexander-Ploskin"
-let contents = pages |> List.map (fun page -> match page with
-                                               | Some(content) -> content
-                                               | _ -> Async<>()) 
-let tasks = contents |> List.mapi (fun i content -> saveContentAsync $"{i}.html" content)
-tasks |> Async.Parallel |> Async.RunSynchronously |> ignore
-*)
-
-
 
 let fetchAsync (url : string) =
        async {
@@ -63,9 +20,34 @@ let fetchAsync (url : string) =
                use stream = response.GetResponseStream()
                use reader = new StreamReader(stream)
                let html = reader.ReadToEnd()
+               do printfn "[.NET Thread %d]" Thread.CurrentThread.ManagedThreadId
                return Some html
            with 
                | _ -> return None
        }
 
-printfn "%A" (fetchAsync "https://github.com/Alexander-Ploskin" |> Async.RunSynchronously)
+let saveContentAsync (path : string) (content : string) =
+    async {
+        try
+            use stream = File.Create(path)
+            use writer = new StreamWriter(stream)
+            do printfn "[.NET Thread %d]" Thread.CurrentThread.ManagedThreadId
+            return writer.Write(content)
+        with
+        | :?IOException -> failwith "Invalid path"
+    }
+
+let voidAsync =
+    async {
+        return ()
+    }
+
+let savePageAsync (path : string) (content : Option<_>) =
+    match content with
+    | Some html -> saveContentAsync path html
+    | _ -> voidAsync
+
+let sites = ["https://github.com/Alexander-Ploskin"; "http://se.math.spbu.ru"; "https://habr.com/ru/company/microsoft/blog/335560/"]
+let options = sites |> List.map (fun site -> site |> fetchAsync) |> Async.Parallel |> Async.RunSynchronously
+
+options |> Array.mapi (fun i option -> savePageAsync $"{i}.html" option) |> Async.Parallel |> Async.RunSynchronously |> ignore
