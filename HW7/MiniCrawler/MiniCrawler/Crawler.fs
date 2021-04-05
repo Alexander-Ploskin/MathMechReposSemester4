@@ -21,6 +21,7 @@ let fetchAsync (url : string) =
                use reader = new StreamReader(stream)
                let html = reader.ReadToEnd()
                do printfn "[.NET Thread %d]" Thread.CurrentThread.ManagedThreadId
+               do printfn "Downloaded page %s with size of %d" url html.Length
                return Some html
            with 
                | _ -> return None
@@ -37,17 +38,18 @@ let saveContentAsync (path : string) (content : string) =
         | :?IOException -> failwith "Invalid path"
     }
 
-let voidAsync =
-    async {
-        return ()
-    }
-
 let savePageAsync (path : string) (content : Option<_>) =
     match content with
     | Some html -> saveContentAsync path html
-    | _ -> voidAsync
+    | _ -> async { return() }
 
-let sites = ["https://github.com/Alexander-Ploskin"; "http://se.math.spbu.ru"; "https://habr.com/ru/company/microsoft/blog/335560/"]
-let options = sites |> List.map (fun site -> site |> fetchAsync) |> Async.Parallel |> Async.RunSynchronously
+let downloadLinkedPages (url : string) (path : string) =
+    let mainPageContent = fetchAsync url |> Async.RunSynchronously
+    match mainPageContent with
+    | Some content -> Directory.CreateDirectory(path) |> ignore
+                      let links = content |> getAllLinkedPages
+                      let downloaded = links |> List.map (fun link -> link |> fetchAsync) |> Async.Parallel |> Async.RunSynchronously
+                      downloaded |> Array.mapi (fun i option -> savePageAsync $"{path}/{i}.html" option) |> Async.Parallel |> Async.RunSynchronously |> ignore
+    | None -> ()
 
-options |> Array.mapi (fun i option -> savePageAsync $"{i}.html" option) |> Async.Parallel |> Async.RunSynchronously |> ignore
+downloadLinkedPages "https://github.com/Alexander-Ploskin" "GitHub"
