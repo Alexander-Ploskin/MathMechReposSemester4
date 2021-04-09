@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MiniCrawler", "MiniCrawler\MiniCrawler.fsproj", "{CB56A206-EC4F-4012-BB17-D3AB95BF0E63}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MiniCrawler", "MiniCrawler\MiniCrawler.fsproj", "{CB56A206-EC4F-4012-BB17-D3AB95BF0E63}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MiniCrawlerTests", "MiniCrawlerTests\MiniCrawlerTests.fsproj", "{5AEEA09A-84AF-4277-BBCD-7CD1B7528796}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CB56A206-EC4F-4012-BB17-D3AB95BF0E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB56A206-EC4F-4012-BB17-D3AB95BF0E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB56A206-EC4F-4012-BB17-D3AB95BF0E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AEEA09A-84AF-4277-BBCD-7CD1B7528796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AEEA09A-84AF-4277-BBCD-7CD1B7528796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AEEA09A-84AF-4277-BBCD-7CD1B7528796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AEEA09A-84AF-4277-BBCD-7CD1B7528796}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

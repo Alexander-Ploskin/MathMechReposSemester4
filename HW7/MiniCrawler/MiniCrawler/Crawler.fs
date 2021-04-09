@@ -3,15 +3,11 @@
 open System.IO
 open System.Net
 open System.Text.RegularExpressions
-open System.Threading
-
-// Regex which matches with links in the <a href="http://..."> form 
-let linkRegex = 
-    Regex("<a href\s*=\s*\"?(https?://[^\"]+)\"?\s*>", RegexOptions.Compiled)
 
 // Finds all links matching with linkRegex
 let getAllLinks (html : string) =
-    [for matches in (linkRegex.Matches(html) : MatchCollection) -> matches.Groups.[1].Value]
+    [for matches in (Regex("<a href\s*=\s*\"?(https?://[^\"]+)\"?\s*>", RegexOptions.Compiled).Matches(html) : MatchCollection) 
+    -> matches.Groups.[1].Value]
 
 // Downloads page by url asynchronously
 let fetchAsync (url : string) =
@@ -22,7 +18,6 @@ let fetchAsync (url : string) =
                use stream = response.GetResponseStream()
                use reader = new StreamReader(stream)
                let html = reader.ReadToEnd()
-               do printfn "[.NET Thread %d]" Thread.CurrentThread.ManagedThreadId
                do printfn "Downloaded page %s with size of %d" url html.Length
                return Some html
            with 
@@ -36,7 +31,6 @@ let saveContentAsync (path : string) (content : string) =
         try
             use stream = File.Create(path)
             use writer = new StreamWriter(stream)
-            do printfn "[.NET Thread %d]" Thread.CurrentThread.ManagedThreadId
             return writer.Write(content)
         with
         | :?IOException -> failwith "Invalid path"
@@ -58,4 +52,5 @@ let downloadLinkedPages (url : string) (path : string) =
                       downloaded |> Array.mapi (fun i option -> savePageAsync $"{path}/{i}.html" option) |> Async.Parallel |> Async.RunSynchronously |> ignore
     | None -> ()
 
-downloadLinkedPages "https://github.com/Alexander-Ploskin" "GitHub"
+// Example of usage
+downloadLinkedPages "https://github.com/Alexander-Ploskin" "GitHub.html"
