@@ -3,7 +3,7 @@
 open ILazy
 open System.Threading
 
-type SingleThreadedLazy<'a> (supplier : unit -> 'a) =
+type LockFreeLazy<'a> (supplier : unit -> 'a) =
     let mutable calculated = false
     let mutable result = None
 
