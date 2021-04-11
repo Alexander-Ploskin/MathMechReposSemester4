@@ -11,11 +11,11 @@ let getTag (a:'a) =
 
 [<Test>]
 let ``Fetch should work if url is correct`` () =
-    fetchAsync "https://github.com/Alexander-Ploskin" |> Async.RunSynchronously |> getTag |> should equal "Some"
+    (fetchAsync "https://github.com/Alexander-Ploskin" |> Async.RunSynchronously).IsSome |> should be True
 
 [<Test>]
 let ``Fetch should do nothing if url is not correct`` () =
-    fetchAsync "bad url" |> Async.RunSynchronously |> getTag |> should equal "None"
+    (fetchAsync "bad url" |> Async.RunSynchronously).IsNone |> should be True
 
 [<Test>]
 let ``Save content should work if path is correct`` () =
