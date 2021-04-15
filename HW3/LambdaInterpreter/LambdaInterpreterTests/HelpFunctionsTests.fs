@@ -13,7 +13,7 @@ type HelpersTests() =
     member this.``New variables generator should work correct``() =
         let checkIfNotContainedInSet set =
             set |> Set.contains (getNewValueNotFromTheSet set) |> not
-        Check.QuickThrowOnFailure CheckIfNotContainedInSet
+        Check.QuickThrowOnFailure checkIfNotContainedInSet
 
     static member GetFreeVariablesCases =
         let x = Guid.NewGuid()
