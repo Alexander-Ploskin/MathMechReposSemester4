@@ -2,7 +2,7 @@
 
 open System
 
-/// Implementation of lambda term by the defenition using Guid as an alphebet
+/// Implementation of lambda term by the defenition using type a as an alphabet
 type LambdaTerm<'a> =
     | Variable of 'a
     | Application of LambdaTerm<'a> * LambdaTerm<'a>
