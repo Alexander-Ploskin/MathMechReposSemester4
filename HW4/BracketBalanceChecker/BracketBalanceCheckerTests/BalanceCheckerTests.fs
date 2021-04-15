@@ -34,10 +34,11 @@ type BracketBalanceChecherTest() =
         ("(]", false)
         ("[)", false)
         ("{]", false)
+        (" ([)]", false)
     |]
 
     [<Test>]
     [<TestCaseSource("testCases")>]
     member this.``Should work correct on basic examples`` (testCase: string * bool) =
         let string, expected = testCase
-        string |> isBalanced |> should equal expected
+        isBalanced string [('(', ')'); ('[', ']'); ('{', '}')] |> should equal expected
