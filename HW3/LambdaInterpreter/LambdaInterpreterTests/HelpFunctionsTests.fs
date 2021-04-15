@@ -11,7 +11,7 @@ open LambdaInterpreter
 type HelpersTests() =
     [<Test>]
     member this.``New variables generator should work correct``() =
-        let CheckIfNotContainedInSet set =
+        let checkIfNotContainedInSet set =
             set |> Set.contains (getNewValueNotFromTheSet set) |> not
         Check.QuickThrowOnFailure CheckIfNotContainedInSet
 
