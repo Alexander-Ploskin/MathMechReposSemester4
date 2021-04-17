@@ -14,24 +14,22 @@ let pathValidationExpression =
 
 /// Wrapper of Regex function, returns true if string matches with expression
 let matchWithExpression expression string =
-    try
-        Regex.IsMatch(string, expression)
-    with
-        | :? ArgumentException -> false
+    Regex.IsMatch(string, expression)
 
 /// Reads notes from the specified file
 let readNotesFromFile notes path =
-    if path |> matchWithExpression pathValidationExpression |> not then failwith "Path is not correct"
+    if path |> matchWithExpression pathValidationExpression |> not then raise <| ArgumentException("Path is not correct")
     try
-        Seq.map (fun (string : String) -> (Array.get (string.Split("-")) 0, Array.get (string.Split("-")) 1)) (File.ReadAllLines(path))
-            |> Set.ofSeq |> (+) notes
+        File.ReadAllLines(path) |>  Seq.map (fun (string : String) -> string.Split("-")) 
+        |> Seq.map (fun (note : string[]) -> note.[0], note.[1]) |> Set.ofSeq |> (+) notes
     with
+        | :? DirectoryNotFoundException -> failwith "There is not such directory"
         | :? FileNotFoundException -> failwith "There is not file by this path"
         | :? ArgumentException -> failwith "Path is not correct"
 
 /// Writes notes into the specified file
 let writeNotesIntoFile notes path =
-    if path |> matchWithExpression pathValidationExpression |> not then failwith "Path is not correct"
+    if path |> matchWithExpression pathValidationExpression |> not then raise <| ArgumentException("Path is not correct")
     try
         let serializedNote = Set.map (fun note -> $"{fst note}-{snd note}") notes
         File.AppendAllLines(path, serializedNote)
@@ -44,7 +42,7 @@ let selectOwners (notes : Set<string * string>) (number : string) =
     Set.filter (fun note -> snd note = number) notes |> Set.map fst
 
 /// Selects all phone numbers belong to the specified name
-let selectPhoneNumbers notes name =
+let selectPhoneNumbers (notes : Set<string * string>) name =
     Set.filter (fun note -> fst note = name) notes |> Set.map snd
 
 /// Inserts new note into the set of notes

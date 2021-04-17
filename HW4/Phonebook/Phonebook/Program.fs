@@ -5,7 +5,7 @@ open System
 open Data
 
 /// Prints introduction which contains all necessary commands
-let printIntroduction =
+let printIntroduction () =
     printfn "Welcome to the phonebook app"
     printfn ""
     printfn "Here is the list of instructions to use application\nEnter the number of instruction to execute it"
@@ -32,17 +32,16 @@ let addNote notes =
     let name = Console.ReadLine()
     printfn "Enter the phone number or enter 0 to leave"
     let phoneNumber = enterCorrect (matchWithExpression numberValidationExpression)
-    if phoneNumber = "0" then ()
-    else printfn "New note saved"
-    insertNote notes name phoneNumber
+    if phoneNumber = "0" |> not then printfn "New note saved"
+                                     insertNote notes name phoneNumber
+    else notes
 
 /// Finds all numbers which belong to the name
 let findNumbers notes =
     printfn "Enter the name:"
     let name = Console.ReadLine()
-    let searchResult = Set.filter (fun note -> fst note = name) notes
     printfn $"Numbers of {name}"
-    Set.iter (fun note -> printfn "%A" <| snd note) searchResult
+    Set.iter (fun note -> printfn "%A" <| note) (selectPhoneNumbers notes name)
 
 /// Finds all owners of the phone number
 let findOwners notes =
@@ -95,7 +94,7 @@ let main =
         | "7" -> loop <| (readData notes) + notes
         | _ -> loop notes
     
-    printIntroduction
+    printIntroduction () |> ignore
     loop Set.empty
 
 main
