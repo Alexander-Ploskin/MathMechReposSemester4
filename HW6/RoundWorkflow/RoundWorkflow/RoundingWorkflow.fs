@@ -2,7 +2,7 @@
 
 open System
 
-// Workflow which provides rounding calculation with a specified accuracy
+/// Workflow which provides rounding calculation with a specified accuracy
 type RoundingCounter(accuracy : int) =
     do if accuracy < 0 then failwith "Accuracy should not be negative"
     member this.Bind (x : float, f) =
