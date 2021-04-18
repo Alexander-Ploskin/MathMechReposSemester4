@@ -3,7 +3,7 @@
 open System
 open ILazy
 
-// Thread safe implementation of lazy calculation
+/// Thread safe implementation of lazy calculation
 type MultiThreadedLazy<'a> (supplier : unit -> 'a) =
     [<VolatileField>]
     let mutable calculated = false

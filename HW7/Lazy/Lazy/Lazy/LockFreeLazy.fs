@@ -3,7 +3,7 @@
 open ILazy
 open System.Threading
 
-// The lock-free thread safe implementation of lazy calculation
+/// The lock-free thread safe implementation of lazy calculation
 type LockFreeLazy<'a> (supplier : unit -> 'a) =
     let mutable calculated = false
     let mutable result = None
