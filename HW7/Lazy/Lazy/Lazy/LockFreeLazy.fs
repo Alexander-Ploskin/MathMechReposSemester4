@@ -5,14 +5,12 @@ open System.Threading
 
 /// The lock-free thread safe implementation of lazy calculation
 type LockFreeLazy<'a> (supplier : unit -> 'a) =
-    let mutable calculated = false
     let mutable result = None
 
     interface ILazy<'a> with
         member this.Get() =
-            if calculated |> not then
+            if result.IsNone then
                 let startValue = result
                 let desiredValue = Some <| supplier()
                 Interlocked.CompareExchange(&result, desiredValue, startValue) |> ignore
-                calculated <- true
             result.Value
