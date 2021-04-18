@@ -2,6 +2,7 @@
 
 open OS
 
+/// Information about virus, which infect a network
 type Virus() =
     member val WindowsToWindows = 0.9 with get, set
     member val WindowsToLinux = 0.5 with get, set
@@ -13,6 +14,7 @@ type Virus() =
     member val MacOSToWindows = 0.15 with get, set
     member val MacOSToLinux = 0.8 with get, set
     
+    /// Returns variety of infection between two OS
     member this.Check = function
         | (Windows, Windows) -> this.WindowsToWindows
         | (Linux, Linux) -> this.LinuxToLinux

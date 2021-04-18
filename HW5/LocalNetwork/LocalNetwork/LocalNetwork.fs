@@ -7,12 +7,7 @@ open Virus
 
 type LocalNetwork(computers : List<Computer>, virus : Virus, random : Random) =
     member this.turn  =
-        let tryInfect (computer : Computer) =
-            match computer.Infected with
-            | true -> ()
-            | false -> computer.tryInfect(virus, random)
-
-        List.iter tryInfect computers
+        computers |> List.iter (fun (computer : Computer) -> computer.tryInfect(virus, random))
         List.iter (fun (computer : Computer) -> computer.JustInfected <- false) computers
 
     member this.canChange =
