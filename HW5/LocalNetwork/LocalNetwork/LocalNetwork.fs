@@ -10,16 +10,13 @@ type LocalNetwork(computers : List<Computer>, virus : Virus, random : Random) =
         let tryInfect (computer : Computer) =
             match computer.Infected with
             | true -> ()
-            | false -> computer.Infected <- List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected && (adjacentComp.JustInfected |> not) && (random.NextDouble() < virus.Check(computer.OS, adjacentComp.OS)))) computer.AdjacentComputers
-                       if computer.Infected then computer.JustInfected <- true
+            | false -> computer.tryInfect(virus, random)
 
         List.iter tryInfect computers
         List.iter (fun (computer : Computer) -> computer.JustInfected <- false) computers
 
     member this.canChange =
-        let canChangeNode (comp : Computer) =
-            comp.Infected && List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected |> not) && virus.Check(comp.OS, adjacentComp.OS) > 0.0) comp.AdjacentComputers
-        List.exists (fun (comp : Computer) -> (canChangeNode comp)) computers
+        List.exists (fun (comp : Computer) -> (comp.canBeInfected(virus))) computers
 
     member this.run =
         if this.canChange  then
