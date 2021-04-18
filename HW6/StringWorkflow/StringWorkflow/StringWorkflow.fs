@@ -2,7 +2,7 @@
 
 open System
 
-// Workflow builder wich provides integer calculation of strings
+/// Workflow builder which provides integer calculation of strings
 type StringCalcBuilder() =
     member this.Bind (x : string, f) =
         match Int32.TryParse x with
