@@ -5,12 +5,12 @@ open Computer
 open OS
 open Virus
 
-type LocalNetwork(computers : List<Computer>, virus : Virus) =
-    member this.turn(rand : Random) =
+type LocalNetwork(computers : List<Computer>, virus : Virus, random : Random) =
+    member this.turn  =
         let tryInfect (computer : Computer) =
             match computer.Infected with
             | true -> ()
-            | false -> computer.Infected <- List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected && (adjacentComp.JustInfected |> not) && (rand.NextDouble() < virus.Check(computer.OS, adjacentComp.OS)))) computer.AdjacentComputers
+            | false -> computer.Infected <- List.exists (fun (adjacentComp : Computer) -> (adjacentComp.Infected && (adjacentComp.JustInfected |> not) && (random.NextDouble() < virus.Check(computer.OS, adjacentComp.OS)))) computer.AdjacentComputers
                        if computer.Infected then computer.JustInfected <- true
 
         List.iter tryInfect computers
@@ -23,7 +23,7 @@ type LocalNetwork(computers : List<Computer>, virus : Virus) =
 
     member this.run =
         if this.canChange  then
-            this.turn <| new Random()
+            this.turn
             let infectedString (comp : Computer) = if comp.Infected then "infected" else "not infected"
             List.iter (fun (comp : Computer) -> printfn $"{comp.Name} with OS {comp.OS} is {infectedString comp}") computers
             printfn "Press any button to continue\n"

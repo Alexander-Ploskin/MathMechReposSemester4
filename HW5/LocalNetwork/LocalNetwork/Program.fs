@@ -4,6 +4,7 @@ open LocalNetwork
 open Computer
 open OS
 open Virus
+open System
 
 let computer1 = Computer(Windows, "c1")
 let computer2 = Computer(Linux, "c2")
@@ -40,4 +41,4 @@ computer14.AdjacentComputers <- [computer15]
 computer15.AdjacentComputers <- [computer14]
 
 computer1.Infected <- true
-LocalNetwork(computers, Virus()).run
+LocalNetwork(computers, Virus(), new Random()).run

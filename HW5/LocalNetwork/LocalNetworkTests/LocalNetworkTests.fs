@@ -40,44 +40,44 @@ type LocalNetworkTests() =
     [<Test>]
     member this. ``Can continue should be false if probability of infection is 0`` () =
         (this.simpleNet.Item 0).Infected <- true
-        LocalNetwork(this.simpleNet, this.notInfectiousVirus).canChange  |> should be False
+        LocalNetwork(this.simpleNet, this.notInfectiousVirus, MyRandom(0.5)).canChange  |> should be False
 
     [<Test>]
     member this. ``Can continue should be true if there is probability of infection`` () =
         (this.simpleNet.Item 0).Infected <- true
-        LocalNetwork(this.simpleNet, this.infectiousVirus).canChange  |> should be True
+        LocalNetwork(this.simpleNet, this.infectiousVirus, MyRandom(0.5)).canChange  |> should be True
 
     [<Test>]
     member this.``Can execute should be false if there is not ane infected computer`` () =
-        LocalNetwork(this.simpleNet, this.notInfectiousVirus).canChange  |> should be False
+        LocalNetwork(this.simpleNet, this.notInfectiousVirus, MyRandom(0.5)).canChange  |> should be False
 
     [<Test>]
     member this.``Can change should be false if infected computer is not linked to any other not infected`` () =
         (this.simpleNet.Item 0).Infected <- true
         (this.simpleNet.Item 0).AdjacentComputers <- []
-        LocalNetwork(this.simpleNet, this.notInfectiousVirus).canChange  |> should be False
+        LocalNetwork(this.simpleNet, this.notInfectiousVirus, MyRandom(0.5)).canChange  |> should be False
 
     [<Test>]
     member this.``Can change should be false if there is not any not infected computer`` () =
         List.iter (fun (comp : Computer) -> comp.Infected <- true) this.simpleNet
-        LocalNetwork(this.simpleNet, this.notInfectiousVirus).canChange  |> should be False
+        LocalNetwork(this.simpleNet, this.notInfectiousVirus, MyRandom(0.5)).canChange  |> should be False
 
     [<Test>]
     member this.``Turn should do nothing if there is not any infected computer`` () =
-        LocalNetwork(this.simpleNet, this.infectiousVirus).turn <| MyRandom(0.5)
+        LocalNetwork(this.simpleNet, this.infectiousVirus, MyRandom(0.5)).turn
         List.fold (fun acc (comp : Computer) -> acc || comp.Infected) false this.simpleNet |> should be False
 
     [<Test>]
     member this.``Turn should do nothing if probability of infection is 0`` () =
         (this.simpleNet.Item 0).Infected <- true
-        LocalNetwork(this.simpleNet, this.notInfectiousVirus).turn <| MyRandom(0.5)
+        LocalNetwork(this.simpleNet, this.notInfectiousVirus, MyRandom(0.5)).turn
         List.fold (fun acc (comp : Computer) -> acc || (comp.Infected && (comp.Name = "comp1" |> not))) false this.simpleNet |> should be False
 
     [<Test>]
     member this.``Should do nothing if infected computer isn't linked to any uninfected computer`` () =
         (this.simpleNet.Item 0).Infected <- true
         (this.simpleNet.Item 0).AdjacentComputers <- []
-        LocalNetwork(this.simpleNet, this.notInfectiousVirus).turn <| MyRandom(0.5)
+        LocalNetwork(this.simpleNet, this.notInfectiousVirus, MyRandom(0.5)).turn
         List.fold (fun acc (comp : Computer) -> acc || (comp.Infected && (comp.Name = "comp1" |> not))) false this.simpleNet |> should be False
 
     [<Test>]
@@ -94,12 +94,12 @@ type LocalNetworkTests() =
         computer24.AdjacentComputers <- [computer22]
         computer25.AdjacentComputers <- [computer22]
         computer21.Infected <- true
-        let network = LocalNetwork([computer21; computer22; computer23; computer24; computer25], this.infectiousVirus)
+        let network = LocalNetwork([computer21; computer22; computer23; computer24; computer25], this.infectiousVirus, MyRandom(0.5))
 
-        network.turn <| MyRandom(0.5)
+        network.turn
         (computer21.Infected && computer22.Infected && computer23.Infected) |> should be True
 
-        network.turn <| MyRandom(0.5)
+        network.turn
         (computer21.Infected && computer22.Infected && computer23.Infected && computer24.Infected && computer25.Infected) |> should be True
 
     [<Test>]
@@ -117,6 +117,6 @@ type LocalNetworkTests() =
         computer31.Infected <- true
         computer33.Infected <- true
         
-        let network = LocalNetwork([computer31; computer32; computer33], this.infectiousVirus)
-        network.turn <| MyRandom(0.5)
+        let network = LocalNetwork([computer31; computer32; computer33], this.infectiousVirus, MyRandom(0.5))
+        network.turn
         (computer31.Infected && computer32.Infected && computer33.Infected) |> should be True
