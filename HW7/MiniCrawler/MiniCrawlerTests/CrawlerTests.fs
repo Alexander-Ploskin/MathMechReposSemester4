@@ -25,4 +25,4 @@ let expectedLinks = [
 
 [<Test>]
 let ``Links finder should work correctly`` () =
-    File.ReadAllText("../../../TestDir/github.html") |> getAllLinks |> should equal expectedLinks
+    File.ReadAllText("../../../TestDir/github.txt") |> getAllLinks |> should equal expectedLinks
